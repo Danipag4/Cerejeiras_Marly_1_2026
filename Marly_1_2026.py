@@ -8,7 +8,7 @@ st.set_page_config(layout="wide")
 #color = st.color_picker("Pick A Color", "#00f900")
 #st.write("The current color is", color)
 
-df = pd.read_csv("Marly2026.csv", sep=",")
+df = pd.read_csv("Marly25_26.csv", sep=",")
 
 
 df=df.sort_values("Nome")
@@ -22,24 +22,24 @@ df["Avaliar"] = df["Avaliador"]
 
 
 st.write("""
-# Cerejeiras - Análise de Competências (1° Sem 2026)
+# Cerejeiras - Comparativo Análise de Competências (2025 - 2026)
 """ )
 
 st.sidebar.write("""
 ## Marly Rodrigues da Silva
 """ )
 
-aval = ["Autoavaliação","Gestor","Pares","Liderados"]
+aval = ["Autoavaliação 2025","Autoavaliação 2026","Gestor 2025","Gestor 2026","Pares 2025","Pares 2026","Liderados 2025","Liderados 2026"]
 
 Nome = st.sidebar.selectbox("Avaliados",df["Colab"].unique())
 
 df_filtered = df[df["Colab"] == Nome]
 #df_filtered
 
-df_Média = df_filtered.groupby("Compet")[["Autoavaliação","Gestor","Pares","Liderados"]].mean().round(decimals=1).reset_index()
+df_Média = df_filtered.groupby("Compet")[["Autoavaliação 2025","Autoavaliação 2026","Gestor 2025","Gestor 2026","Pares 2025","Pares 2026","Liderados 2025","Liderados 2026"]].mean().round(decimals=1).reset_index()
 #df_Média
 
-aval = ["Autoavaliação","Gestor","Pares","Liderados"]
+aval = ["Autoavaliação 2025","Autoavaliação 2026","Gestor 2025","Gestor 2026","Pares 2025","Pares 2026","Liderados 2025","Liderados 2026"]
 #----------------------------------------------------------------------
 
 #Avaliado = str(Nome)
@@ -47,7 +47,8 @@ st.write("""
 ## Competências
 """ ), Nome
 
-fig_comp = px.bar(df_Média, y=aval, x="Compet", barmode='group', color_discrete_map = {"Autoavaliação": "#094E86","Gestor": "#EC6227", "Pares": "#B78691", "Liderados": "#979B84"})
+#fig_comp = px.bar(df_Média, y=aval, x="Compet", barmode='group', color_discrete_map = {"Autoavaliação": "#094E86","Gestor": "#EC6227", "Pares": "#B78691", "Liderados": "#979B84"})
+fig_comp = px.bar(df_Média, y=aval, x="Compet", barmode='group', color_discrete_map = {"Autoavaliação 2025": "#1224EA","Autoavaliação 2026": "#3EA8F9","Gestor 2025": "#EC6227","Gestor 2026": "#EE956E", "Pares 2025": "#B78691", "Pares 2026": "#B9ABB1", "Liderados 2025": "#979B84", "Liderados 2026": "#C9E181"})
 fig_comp.update_layout(xaxis_title="Competências", yaxis_title="Médias")
 
 fig_comp
@@ -60,7 +61,7 @@ st.write("""
 ## Análise das Perguntas
 """ ), Nome
 
-aval1 = ["Gestor", "Autoavaliação","Pares", "Liderados"]
+aval1 = ["Autoavaliação 2025","Autoavaliação 2026","Gestor 2025","Gestor 2026","Pares 2025","Pares 2026","Liderados 2025","Liderados 2026"]
 
 #df["CompetUniqx"] = df_filtered["Competencia"]
 #df["CompetUniqx"]
@@ -80,7 +81,7 @@ df_filtered2 = df_filtered[df["Compet"] == unica_Competencia]
 
 df_filtered2["Pergunta"] = (df_filtered2["Pergunta"].str.replace(" - ", "<br>") .str.replace(" / ", "<br>"))
 
-fig_Perg = px.bar(df_filtered2, y="Pergunta", x=aval1, orientation="h", height=500, barmode="group",color_discrete_map={"Autoavaliação": "#094E86","Gestor": "#EC6227", "Pares": "#B78691", "Liderados": "#979B84"})
+fig_Perg = px.bar(df_filtered2, y="Pergunta", x=aval1, orientation="h", height=700, barmode="group",color_discrete_map={"Autoavaliação 2025": "#1224EA","Autoavaliação 2026": "#3EA8F9","Gestor 2025": "#EC6227","Gestor 2026": "#EE956E", "Pares 2025": "#B78691", "Pares 2026": "#B9ABB1", "Liderados 2025": "#979B84", "Liderados 2026": "#C9E181"})
 
 fig_Perg.update_layout(xaxis_title="Médias", yaxis_title="Perguntas")
 
@@ -121,14 +122,14 @@ st.write("""
 
 Compet_Desemp = st.selectbox("Defina a Competência",df["Compet"].dropna().unique(),index=1)
 
-aval1 = ["Autoavaliação","Gestor","Pares","Liderados"]
+aval1 = ["Autoavaliação 2025","Autoavaliação 2026","Gestor 2025","Gestor 2026","Pares 2025","Pares 2026","Liderados 2025","Liderados 2026"]
 
 df_filtered5 = df[df["Compet"] == Compet_Desemp]
 
-df_MédiaGeral = df_filtered5.groupby("Nome")[["Autoavaliação","Gestor","Pares","Liderados"]].mean().round(decimals=1).reset_index()
+df_MédiaGeral = df_filtered5.groupby("Nome")[["Autoavaliação 2025","Autoavaliação 2026","Gestor 2025","Gestor 2026","Pares 2025","Pares 2026","Liderados 2025","Liderados 2026"]].mean().round(decimals=1).reset_index()
 #df_MédiaGeral
 
-fig_DesenvGeral = px.bar(df_MédiaGeral, y=aval1, x="Nome", barmode='group',color_discrete_map = {"Autoavaliação": "#094E86","Gestor": "#EC6227", "Pares": "#B78691", "Liderados": "#979B84"})
+fig_DesenvGeral = px.bar(df_MédiaGeral, y=aval1, x="Nome", barmode='group',color_discrete_map = {"Autoavaliação 2025": "#1224EA","Autoavaliação 2026": "#3EA8F9","Gestor 2025": "#EC6227","Gestor 2026": "#EE956E", "Pares 2025": "#B78691", "Pares 2026": "#B9ABB1", "Liderados 2025": "#979B84", "Liderados 2026": "#C9E181"})
 fig_DesenvGeral.update_layout(xaxis_title="Colaboradores do Setor", yaxis_title="Médias")
 fig_DesenvGeral
 
@@ -159,12 +160,12 @@ if AvalEquipe:
     #df_filtered3
 
     #df_MédiaSetor = df_filtered7.groupby("Nome")[["Autoavaliação","Gestor","Pares","Liderados"]].mean().round(decimals=1).reset_index()
-    df_MédiaSetor = df_filtered7.groupby("Nome")[["Gestor","Autoavaliação","Pares","Liderados"]].mean().round(decimals=1).reset_index()
+    df_MédiaSetor = df_filtered7.groupby("Nome")[["Autoavaliação 2025","Autoavaliação 2026","Gestor 2025","Gestor 2026","Pares 2025","Pares 2026","Liderados 2025","Liderados 2026"]].mean().round(decimals=1).reset_index()
     #df_MédiaSetor
 
     #fig_Setor = px.bar(df_MédiaSetor, x=aval, y="Nome", orientation="h", barmode='group', color_discrete_map = {"Autoavaliação":"Blue", "Gestor":"#00F900","Pares":"#F9AF00", "Liderados":"#F900D2"})
     
-    fig_Setor = px.bar(df_MédiaSetor, x=aval, y="Nome", orientation="h", height=500,barmode='group', color_discrete_map = {"Autoavaliação": "#094E86","Gestor": "#EC6227", "Pares": "#B78691", "Liderados": "#979B84"})
+    fig_Setor = px.bar(df_MédiaSetor, x=aval, y="Nome", orientation="h", height=990,barmode='group', color_discrete_map = {"Autoavaliação 2025": "#1224EA","Autoavaliação 2026": "#3EA8F9","Gestor 2025": "#EC6227","Gestor 2026": "#EE956E", "Pares 2025": "#B78691", "Pares 2026": "#B9ABB1", "Liderados 2025": "#979B84", "Liderados 2026": "#C9E181"})
     fig_Setor.update_layout(xaxis_title="Média", yaxis_title="Colaborador")
     fig_Setor
 #---------------------------------------------
